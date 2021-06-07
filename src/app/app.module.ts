@@ -9,6 +9,8 @@ import { Events } from './actual-day/events/events.component';
 import { PreparationItem } from './actual-day/events/preparation-item/preparation-item.component';
 import { TodosComponent } from './actual-day/todos/todos.component';
 import { StepComponent } from './actual-day/todos/step/step.component';
+import { ShoppingListComponent } from './actual-day/shopping-list/shopping-list.component';
+import { ProductComponent } from './actual-day/shopping-list/product/product.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { StepComponent } from './actual-day/todos/step/step.component';
     Events,
     PreparationItem,
     TodosComponent,
-    StepComponent
+    StepComponent,
+    ShoppingListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
