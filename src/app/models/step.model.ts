@@ -1,5 +1,5 @@
-export class Item {
+export class Step {
     public name: string;
-    public itIsDone: boolean;
     public serialNumber: number;
+    public itIsDone: boolean;
 }
