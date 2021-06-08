@@ -1,4 +1,4 @@
-export class Task {
+export interface Task {
     description: string;
     name: string;
     type: string;

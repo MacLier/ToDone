@@ -1,4 +1,4 @@
-export class Product {
+export class ShoppingProduct {
 
     public name: string;
     public itIsDone: boolean;
