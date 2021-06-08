@@ -3,10 +3,10 @@ export interface Task {
     name: string;
     type: string;
     ID: number;
-    UUID: string;
+    UUID?: string;
     notification?: Date;
-    allDone: boolean;
-    timeRequirement: number;
-    serialNumber: number;
-    important: boolean;
+    allDone?: boolean;
+    timeRequirement?: number;
+    serialNumber?: number;
+    important?: boolean;
 }
