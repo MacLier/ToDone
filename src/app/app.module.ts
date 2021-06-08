@@ -16,7 +16,6 @@ import { SubtasksListComponent } from './actual-day/tasks-list/subtasks-list/sub
     ActualDay,
     TasksListComponent,
     SubtasksListComponent,
-
   ],
   imports: [
     BrowserModule,

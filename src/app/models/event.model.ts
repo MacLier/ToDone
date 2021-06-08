@@ -1,21 +1,12 @@
 import { PreparationItem } from "../models/preparationItem.model";
-import { Task } from "../interfaces/task.interface";
+import { Task } from "../models/task.model";
 
-export class Event implements Task {
-    description: string;
-    type: string;
-    ID: number;
-    UUID?: string
-    allDone?: boolean;
-    timeRequirement?: number;
-    serialNumber?: number;
-    important?: boolean;
-    name: string;
+export class Event extends Task {
     deadline?: Date;
     softDeadline?: Date;
     repeatable?: boolean;
     allDay?: boolean;
     location?: string;
     members?: string;
-    preparations?: PreparationItem[];
+    preparations?: Array<PreparationItem>;
 }

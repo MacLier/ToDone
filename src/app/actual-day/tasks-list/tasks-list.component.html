@@ -1,1 +1,17 @@
-<p>tasks-list works!</p>
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success">New ToDo</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" class="list-group-item clearfix" *ngFor="let task of tasks">
+            <div class="pull-right">
+                <h4 class="list-group-item-heading">Task name: {{ task.taskName }}</h4>
+                <p class="list-group-item-text">Description: {{ task.description }}</p>
+                <p class="list-group-item-text">Type: {{ task.type }}</p>
+            </div>
+        </a>
+    </div>
+</div>
+<app-subtasks-list></app-subtasks-list>
