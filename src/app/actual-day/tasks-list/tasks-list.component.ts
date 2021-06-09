@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Event } from 'src/app/models/event.model';
 import { ShoppingList } from 'src/app/models/shoppingList.model';
 import { ToDo } from 'src/app/models/todo.model';
@@ -14,7 +14,7 @@ import { TasksService } from 'src/app/services/tasks.service'
 export class TasksListComponent implements OnInit {
   taskSubscription: Subscription;
 
-  tasks: Task[]
+  tasks: Array<Task>
   // = [
   //   new ToDo("My first todo for today", "Learn one hour when you wake up", "todo", 1, [{ name: "turn on the light" }, { name: "get a book" }, { name: "read" }]),
   //   new ToDo("My second todo for today", "Make your bed", "todo", 2, [{ name: "get up" }, { name: "adjust your pillow" }, { name: "adjust your blanket" }]),
@@ -23,12 +23,14 @@ export class TasksListComponent implements OnInit {
   // ];
 
 
-  constructor(private TaskService: TasksService) { }
+  constructor(private TasksService: TasksService) { }
 
   ngOnInit() {
-    this.taskSubscription = this.TaskService.read().subscribe(
+    this.taskSubscription = this.TasksService.read().subscribe(
       tasks => {
         this.tasks = tasks
+        console.log(tasks);
+
       },
       err => console.log(err)
 
