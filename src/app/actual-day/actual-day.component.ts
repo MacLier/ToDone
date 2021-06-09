@@ -9,32 +9,6 @@ import { Component } from "@angular/core";
 })
 export class ActualDay {
     timeIsNow: Date = new Date();
-    /*tasks: Task[] = [
-        {
-            name: "inni",
-            description: "min 2 litert",
-            type: "todo",
-            ID: 1,
-            UUID: "nagyonelso",
-            allDone: false,
-            timeRequirement: 15,
-            serialNumber: 2,
-            important: true
-
-        },
-        {
-            name: "enni",
-            description: "min 2 litert",
-            type: "todo",
-            ID: 2,
-            UUID: "nagyonelso",
-            allDone: false,
-            timeRequirement: 30,
-            serialNumber: 3,
-            important: true
-
-        }
-    ]*/
 
     ngOnInit(): void {
 
