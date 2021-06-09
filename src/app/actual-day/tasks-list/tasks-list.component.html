@@ -27,9 +27,9 @@
                 <p class="list-group-item-text">Description: {{ task.description }}</p>
                 <p class="list-group-item-text">Type: {{ task.type }}</p>
             </div>
-            <app-events *ngIf="task.type=='event'">Event</app-events>
-            <app-todos *ngIf="task.type=='todo'">ToDo</app-todos>
-            <app-shoppings *ngIf="task.type=='shoppingList'">ShoppingList</app-shoppings>
+            <app-events *ngIf="task.type=='event'" [event]="task"></app-events>
+            <app-todos *ngIf="task.type=='todo'" [todo]="task"></app-todos>
+            <app-shoppings *ngIf="task.type=='shoppingList'" [shoppingList]="task"></app-shoppings>
         </a>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
@@ -7,9 +7,7 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./todos.component.css']
 })
 export class TodosComponent implements OnInit {
-  todos: Task[] = [
-
-  ]
+  @Input() todo: Task
 
   constructor() { }
 
