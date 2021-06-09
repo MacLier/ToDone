@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { ToDo } from 'src/app/models/todo.model';
 
 @Component({
   selector: 'app-todos',
@@ -7,11 +7,13 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./todos.component.css']
 })
 export class TodosComponent implements OnInit {
-  @Input() todo: Task
+  @Input() steps: ToDo[]
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    console.log("Ez az: " + this.steps[0])
   }
 
 }

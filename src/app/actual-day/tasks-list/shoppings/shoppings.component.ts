@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ShoppingList } from 'src/app/models/shoppingList.model';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
@@ -7,7 +8,7 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./shoppings.component.css']
 })
 export class ShoppingsComponent implements OnInit {
-  @Input() shoppingList: Task
+  @Input() products: ShoppingList[]
   constructor() { }
 
   ngOnInit() {

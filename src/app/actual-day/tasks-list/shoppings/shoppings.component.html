@@ -1,1 +1,8 @@
-<p>shoppings works!</p>
+<div class="container">
+    <a href="#" class="list-group-item" *ngFor="let product of products; index as i">
+        <div class="row">
+            <p>{{product.name}}</p>
+            <p></p>
+        </div>
+    </a>
+</div>

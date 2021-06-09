@@ -3,14 +3,15 @@ import { ShoppingProduct } from "./shoppingProduct.model";
 
 export class ShoppingList extends Task {
     shop?: string
-    products?: Array<ShoppingProduct>;
-    constructor(description: string, taskName: string, type: string, ID: number, steps: Array<ShoppingProduct>) {
+    products: Array<ShoppingProduct>;
+    constructor(description: string, taskName: string, type: string, ID: number, products: Array<ShoppingProduct>) {
 
         super(description, taskName, type, ID);
         this.description = description;
         this.taskName = taskName;
         this.type = type;
         this.ID = ID;
+        this.products = products;
         // this.UUID = UUID;
         // this.notification = notification;
         // this.allDone = allDone;

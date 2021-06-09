@@ -14,6 +14,7 @@ export class ToDo extends Task {
         this.taskName = taskName;
         this.type = type;
         this.ID = ID;
+        this.steps = steps;
         // this.UUID = UUID;
         // this.notification = notification;
         // this.allDone = allDone;

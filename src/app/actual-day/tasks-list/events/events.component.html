@@ -1,1 +1,8 @@
-<p>events works!</p>
+<div class="container">
+    <a href="#" class="list-group-item" *ngFor="let preparation of preparations; index as i">
+        <div class="row">
+            <p>{{preparation.name}}</p>
+            <p></p>
+        </div>
+    </a>
+</div>

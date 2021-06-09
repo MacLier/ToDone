@@ -1,1 +1,8 @@
-<p>todos works!</p>
+<div class="container">
+    <a href="#" class="list-group-item" *ngFor="let step of steps; index as i">
+        <div class="row">
+            <p>{{step.name}}</p>
+            <p></p>
+        </div>
+    </a>
+</div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Event } from 'src/app/models/event.model';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
@@ -7,7 +8,7 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  @Input() event: Task
+  @Input() preparations: Event[]
   constructor() { }
 
   ngOnInit() {

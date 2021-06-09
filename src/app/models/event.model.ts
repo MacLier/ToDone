@@ -8,14 +8,15 @@ export class Event extends Task {
     allDay?: boolean;
     location?: string;
     members?: string;
-    preparations?: Array<PreparationItem>;
-    constructor(description: string, taskName: string, type: string, ID: number, steps: Array<PreparationItem>) {
+    preparations: Array<PreparationItem>;
+    constructor(description: string, taskName: string, type: string, ID: number, preparation: Array<PreparationItem>) {
 
         super(description, taskName, type, ID);
         this.description = description;
         this.taskName = taskName;
         this.type = type;
         this.ID = ID;
+        this.preparations = preparation;
         // this.UUID = UUID;
         // this.notification = notification;
         // this.allDone = allDone;
