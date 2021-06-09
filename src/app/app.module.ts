@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ActualDay } from './actual-day/actual-day.component';
 import { TasksListComponent } from './actual-day/tasks-list/tasks-list.component';
-import { SubtasksListComponent } from './actual-day/tasks-list/subtasks-list/subtasks-list.component';
+import { TodosComponent } from './actual-day/tasks-list/todos/todos.component';
+import { EventsComponent } from './actual-day/tasks-list/events/events.component';
+import { ShoppingsComponent } from './actual-day/tasks-list/shoppings/shoppings.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { SubtasksListComponent } from './actual-day/tasks-list/subtasks-list/sub
     HeaderComponent,
     ActualDay,
     TasksListComponent,
-    SubtasksListComponent,
+    TodosComponent,
+    EventsComponent,
+    ShoppingsComponent,
   ],
   imports: [
     BrowserModule,

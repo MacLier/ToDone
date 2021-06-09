@@ -15,7 +15,8 @@ export class TasksListComponent implements OnInit {
     new ToDo("My second todo for today", "Make your bed", "todo", 2),
     new ShoppingList("My third todo for today", "From the SHOP", "shoppingList", 3),
     new Event("My fourth todo for today", "Nyári Tábor", "event", 4),
-  ]
+  ];
+  tasktype: string = ""
 
   constructor() { }
 

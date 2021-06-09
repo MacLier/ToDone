@@ -1,6 +1,22 @@
 <div class="row">
     <div class="col-xs-12">
-        <button class="btn btn-success">New ToDo</button>
+        <div class="col-xs-6">
+            <form action="#" method="post">
+
+                <label for="taskName" class="input-group">Name</label>
+                <input type="text" id="taskName" placeholder="New task name" class="input-group w-50 form-control">
+                <label for="taskDescription" class="input-group">Description</label>
+                <input type="text" id="taskDescription" placeholder="New description"
+                    class="input-group w-50 form-control">
+                <label for="taskType" class="input-group">Type</label>
+                <select name="taskType" id="taskType" class="input-group w-50 form-control">
+                    <option value="event">Event</option>
+                    <option value="todo">ToDo</option>
+                    <option value="shoppingList" class="input-group mb-3">Shopping List</option>
+                </select>
+                <button class="btn btn-success">New ToDo</button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -11,7 +27,9 @@
                 <p class="list-group-item-text">Description: {{ task.description }}</p>
                 <p class="list-group-item-text">Type: {{ task.type }}</p>
             </div>
+            <app-events *ngIf="task.type=='event'">Event</app-events>
+            <app-todos *ngIf="task.type=='todo'">ToDo</app-todos>
+            <app-shoppings *ngIf="task.type=='shoppingList'">ShoppingList</app-shoppings>
         </a>
     </div>
 </div>
-<app-subtasks-list></app-subtasks-list>
