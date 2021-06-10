@@ -1,8 +1,8 @@
 dataservice = {
 
     createTask(task, tasks) {
-        task.ID = getHighestID + 1;
-        tasks.push(task);
+        task.ID = this.getHighestID(tasks) + 1;
+        return tasks.push(task);
 
     },
     createSubTask(ID, tasks, subtask) {

@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const database = require('./database.js');
 const db = require('./dbservice.js');
-const { json } = require('body-parser');
 const port = 3232;
 
 
@@ -10,12 +10,13 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-    next();
-});
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '**');
+//     res.setHeader('Access-Control-Allow-Headers', '**');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+//     next();
+// });
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hello backend')
@@ -26,9 +27,9 @@ app.get('/api', (req, res) => {
     res.json(database);
 });
 app.post('/api', async (req, res, next) => {
-    console.log("App.jsből" + req.body);
-    await db.createTask(req.body, database);
-    res.send('/');
+    console.log("App.jsből" + JSON.stringify(req.body));
+    const result = await db.createTask(req.body, database);
+    res.json(result);
 
 })
 

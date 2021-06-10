@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
 import { ShoppingList } from 'src/app/models/shoppingList.model';
 import { ToDo } from 'src/app/models/todo.model';
@@ -24,7 +25,7 @@ export class TasksListComponent implements OnInit {
   // ];
 
 
-  constructor(private TasksService: TasksService) { }
+  constructor(private TasksService: TasksService, private router: Router) { }
 
   ngOnInit() {
     this.taskSubscription = this.TasksService.read().subscribe(
@@ -42,7 +43,9 @@ export class TasksListComponent implements OnInit {
   }
 
   onCreateNewTask() {
-    this.TasksService.create(this.newTask)
+    this.TasksService.create(this.newTask).forEach(
+      data => this.router.navigateByUrl('/')
+    )
 
   }
 
