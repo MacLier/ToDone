@@ -1,20 +1,21 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="col-xs-6">
-            <form action="#" method="post">
+            <form (submit)="onCreateNewTask()" class="form simple-form">
 
                 <label for="taskName" class="input-group">Name</label>
-                <input type="text" id="taskName" placeholder="New task name" class="input-group w-50 form-control">
-                <label for="taskDescription" class="input-group">Description</label>
-                <input type="text" id="taskDescription" placeholder="New description"
-                    class="input-group w-50 form-control">
-                <label for="taskType" class="input-group">Type</label>
-                <select name="taskType" id="taskType" class="input-group w-50 form-control">
+                <input name="taskName" type="text" id="taskName" placeholder="New task name"
+                    class="input-group w-50 form-control" [(ngModel)]="newTask.taskName">
+                <label for="description" class="input-group">Description</label>
+                <input name="description" type="text" id="description" placeholder="New description"
+                    [(ngModel)]="newTask.description" class="input-group w-50 form-control">
+                <label for="type" class="input-group">Type</label>
+                <select name="type" id="type" class="input-group w-50 form-control" [(ngModel)]="newTask.type">
                     <option value="event">Event</option>
                     <option value="todo">ToDo</option>
                     <option value="shoppingList" class="input-group mb-3">Shopping List</option>
                 </select>
-                <button class="btn btn-success">New ToDo</button>
+                <button class="btn btn-success" type="submit">Create new Task</button>
             </form>
         </div>
     </div>

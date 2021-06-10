@@ -14,7 +14,8 @@ import { TasksService } from 'src/app/services/tasks.service'
 export class TasksListComponent implements OnInit {
   taskSubscription: Subscription;
 
-  tasks: Array<Task>
+  tasks: Array<Task>;
+  newTask: Task = new Task('', '', '', 0)
   // = [
   //   new ToDo("My first todo for today", "Learn one hour when you wake up", "todo", 1, [{ name: "turn on the light" }, { name: "get a book" }, { name: "read" }]),
   //   new ToDo("My second todo for today", "Make your bed", "todo", 2, [{ name: "get up" }, { name: "adjust your pillow" }, { name: "adjust your blanket" }]),
@@ -29,8 +30,6 @@ export class TasksListComponent implements OnInit {
     this.taskSubscription = this.TasksService.read().subscribe(
       tasks => {
         this.tasks = tasks
-        console.log(tasks);
-
       },
       err => console.log(err)
 
@@ -40,6 +39,11 @@ export class TasksListComponent implements OnInit {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.taskSubscription.unsubscribe();
+  }
+
+  onCreateNewTask() {
+    this.TasksService.create(this.newTask)
+
   }
 
 }

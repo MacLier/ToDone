@@ -1,8 +1,8 @@
 const express = require('express');
-const db = [
+const database = [
     {
         description: "My first todo for today",
-        name: "Learn one hour when you wake up",
+        taskName: "Learn one hour when you wake up",
         type: "todo",
         ID: 1,
         steps: [
@@ -13,7 +13,7 @@ const db = [
     },
     {
         description: "My second todo for today",
-        name: "Make your bed",
+        taskName: "Make your bed",
         type: "todo",
         ID: 2,
         steps: [
@@ -24,7 +24,7 @@ const db = [
     },
     {
         description: "My third todo for today",
-        name: "From the SHOP",
+        taskName: "From the SHOP",
         type: "shoppingList",
         ID: 3,
         products: [
@@ -35,7 +35,7 @@ const db = [
     },
     {
         description: "My fourth todo for today",
-        name: "Nyári Tábor",
+        taskName: "Nyári Tábor",
         type: "event",
         ID: 4,
         preparations: [

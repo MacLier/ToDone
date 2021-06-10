@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const database = require('./database.js');
-const db = require('./dataservice.js');
+const db = require('./dbservice.js');
+const { json } = require('body-parser');
 const port = 3232;
 
 
@@ -18,17 +19,24 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     res.send('Hello backend')
-})
+});
 
 app.get('/api', (req, res) => {
-    res.json(database)
+    console.log("get kérés a /api-n");
+    res.json(database);
+});
+app.post('/api', async (req, res, next) => {
+    console.log("App.jsből" + req.body);
+    await db.createTask(JSON.parse(req.body), database);
+    res.redirect('/');
+
 })
 
 app.all('*', (req, res) => {
     res.status(404);
     res.send('Page or request not exist')
-})
+});
 
 app.listen(port, () => {
     console.log(`Server is running in port: ${port}`);
-})
+});

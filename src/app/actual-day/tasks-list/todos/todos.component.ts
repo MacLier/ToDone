@@ -13,7 +13,7 @@ export class TodosComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Ez az: " + this.steps[0])
+
   }
 
 }

@@ -2,7 +2,7 @@ export class Task {
     description: string;
     taskName: string;
     type: string;
-    ID: number;
+    ID?: number;
     UUID?: string;
     notification?: Date;
     allDone?: boolean;
