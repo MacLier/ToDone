@@ -18,7 +18,7 @@ export class TasksService {
   }
   create(task): Observable<any> {
     console.log("angularservicebol" + JSON.stringify(task));
-    this.http.post<Task>(this.url, task);
+    return this.http.post<Task>(this.url, task);
 
   }
 }

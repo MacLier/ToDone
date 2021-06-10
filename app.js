@@ -27,8 +27,8 @@ app.get('/api', (req, res) => {
 });
 app.post('/api', async (req, res, next) => {
     console.log("App.jsből" + req.body);
-    await db.createTask(JSON.parse(req.body), database);
-    res.redirect('/');
+    await db.createTask(req.body, database);
+    res.send('/');
 
 })
 
