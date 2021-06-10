@@ -1,16 +1,31 @@
 dataservice = {
 
-    createTask(description, taskName, type, ID, steps) {
+    createTask(task, tasks) {
+        task.ID = getHighestID + 1;
+        tasks.push(task);
 
     },
-    createSubTask(id, name) {
+    createSubTask(ID, tasks, subtask) {
+        if (readTaskByID(ID, tasks).products) {
+            task.products.push(subtask)
+        } else if (readTaskByID(ID, tasks).steps) {
+            task.steps.push(subtask)
+        } else if (readTaskByID(ID, tasks).preparations) {
+            task.preparations.push(subtask)
+        }
+
 
     },
-    readTask(id) {
-
+    readTaskByID(ID, tasks) {
+        for (const task of tasks) {
+            if (ID == task.ID) {
+                return task
+            }
+            return "No mach found"
+        }
     },
 
-    updateTask(id, description, taskName, type, ID, steps) {
+    updateTask(ID, task) {//id, description, taskName, type, ID, steps
 
     },
     updateSubTask(id, name) {
@@ -22,8 +37,11 @@ dataservice = {
     },
     deleteSubTask(id, name) {
 
-    }
-
+    },
+    getHighestID(tasks) {
+        return tasks.length
+    },
 }
+
 
 module.exports = dataservice;
