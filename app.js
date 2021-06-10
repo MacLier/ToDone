@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const database = require('./db.js');
-const db = require('./db.js');
+const database = require('./database.js');
+const db = require('./dataservice.js');
 const port = 3232;
 
 
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api', (req, res) => {
-    res.json(db)
+    res.json(database)
 })
 
 app.all('*', (req, res) => {

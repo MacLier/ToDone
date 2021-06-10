@@ -8,7 +8,7 @@ const db = [
         steps: [
             { name: "turn on the light" },
             { name: "get a book" },
-            { name: "read" }
+            { name: "read" },
         ]
     },
     {
@@ -46,4 +46,4 @@ const db = [
     },
 ];
 
-module.exports = db;
+module.exports = database;
