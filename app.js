@@ -23,15 +23,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api', (req, res) => {
-    console.log("get kérés a /api-n");
+    console.log("GET a /api-n");
     res.json(database);
 });
 app.post('/api', async (req, res, next) => {
-    console.log("App.jsből" + JSON.stringify(req.body));
+    console.log("POST a /api-n");
     const result = await db.createTask(req.body, database);
     console.log(result);
     res.json(result);
 
+})
+app.put('/api', async (req, res) => {
+    console.log("PUT a /api-n");
+    const result = await db.updateTask(req.body.ID, req.body, database);
+    res.json(result);
+});
+app.delete('/api', async (req, res) => {
+    console.log("DELETE a /api-n");
+    const result = await db.deleteTask(req.body.ID, database)
 })
 
 app.all('*', (req, res) => {
