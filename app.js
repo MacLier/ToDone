@@ -29,6 +29,7 @@ app.get('/api', (req, res) => {
 app.post('/api', async (req, res, next) => {
     console.log("App.jsből" + JSON.stringify(req.body));
     const result = await db.createTask(req.body, database);
+    console.log(result);
     res.json(result);
 
 })
