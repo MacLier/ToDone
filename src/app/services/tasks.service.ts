@@ -17,8 +17,16 @@ export class TasksService {
     return this.http.get(this.url);
   }
   create(task): Observable<any> {
-    console.log("angularservicebol" + JSON.stringify(task));
+    console.log("POST from taskService" + JSON.stringify(task));
     return this.http.post<Task>(this.url, task);
 
+  }
+  updateTask(task): Observable<any> {
+    console.log("PUT from taskService");
+    return this.http.put<Task>(this.url, task);
+  }
+  deleteTask(task): Observable<any> {
+    console.log("DELETE from taskService");
+    return this.http.delete<Task>(this.url, task);
   }
 }

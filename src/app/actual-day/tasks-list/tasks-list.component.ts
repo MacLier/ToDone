@@ -48,5 +48,10 @@ export class TasksListComponent implements OnInit {
     )
 
   }
+  onDeleteTask(task) {
+    this.TasksService.deleteTask(task).forEach(
+      data => this.router.navigateByUrl('/')
+    )
+  }
 
 }
