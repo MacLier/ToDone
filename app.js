@@ -38,9 +38,9 @@ app.put('/api', async (req, res) => {
     const result = await db.updateTask(req.body.ID, req.body, database);
     res.json(result);
 });
-app.delete('/api', async (req, res) => {
+app.delete('/api/:id', async (req, res) => {
     console.log("DELETE a /api-n");
-    const result = await db.deleteTask(req.body.ID, database)
+    const result = await db.deleteTask(req.params.id, database)
 })
 
 app.all('*', (req, res) => {

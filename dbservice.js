@@ -43,9 +43,9 @@ dataservice = {
         }
     },
 
-    deleteTask(ID, tasks) {
-        const deletedTask = this.readTaskByID(ID, tasks);
-        tasks.splice(deletedTask, 1);
+    deleteTask(ID, database) {
+        console.log(ID);
+        return database.splice(ID - 1, 1);
     },
     deleteSubTask(ID, subTask, tasks) {
         const deletedTask = this.readTaskByID(ID, tasks);

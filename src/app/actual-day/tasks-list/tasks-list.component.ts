@@ -44,11 +44,13 @@ export class TasksListComponent implements OnInit {
 
   onCreateNewTask() {
     this.TasksService.create(this.newTask).forEach(
-      data => this.router.navigateByUrl('/')
+      data => this.router.navigateByUrl('/actualday')
     )
 
   }
   onDeleteTask(task) {
+    console.log(task);
+
     this.TasksService.deleteTask(task).forEach(
       data => this.router.navigateByUrl('/')
     )
