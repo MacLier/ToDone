@@ -1,14 +1,14 @@
 dataservice = {
 
-    createTask(task, tasks) {
+    createTask(task, database) {
         task.ID = this.getHighestID(tasks) + 1;
         console.log("from dbservice" + JSON.stringify(task))
             ;
-        return tasks.push(task);
+        return database.push(task);
 
     },
-    createSubTask(ID, tasks, subtask) {
-        const taskToSubTask = readTaskByID(ID, tasks)
+    createSubTask(ID, database, subtask) {
+        const taskToSubTask = readTaskByID(ID, database)
         if (taskToSubTask.products) {
             taskToSubTask.products.push(subtask)
         } else if (taskToSubTask.steps) {
@@ -19,8 +19,8 @@ dataservice = {
 
 
     },
-    readTaskByID(ID, tasks) {
-        for (const task of tasks) {
+    readTaskByID(ID, database) {
+        for (const task of database) {
             if (ID == task.ID) {
                 return task
             }
@@ -28,12 +28,12 @@ dataservice = {
         }
     },
 
-    updateTask(ID, task, tasks) {//id, description, taskName, type, ID, steps
-        const updatedTask = this.readTaskByID(ID, tasks);
+    updateTask(ID, task, database) {//id, description, taskName, type, ID, steps
+        const updatedTask = this.readTaskByID(ID, database);
         updatedTask = task;
     },
-    updateSubTask(ID, subTask, tasks) {
-        const updatedTask = this.readTaskByID(ID, tasks);
+    updateSubTask(ID, subTask, database) {
+        const updatedTask = this.readTaskByID(ID, database);
         if (updatedTask.products) {
             updatedTask.products.push(subTask)
         } else if (updatedTask.steps) {
@@ -47,8 +47,8 @@ dataservice = {
         console.log(ID);
         return database.splice(ID - 1, 1);
     },
-    deleteSubTask(ID, subTask, tasks) {
-        const deletedTask = this.readTaskByID(ID, tasks);
+    deleteSubTask(ID, subTask, database) {
+        const deletedTask = this.readTaskByID(ID, database);
         if (deletedTask.products) {
             deletedTask.products.splice(subTask, 1)
         } else if (deletedTask.steps) {
@@ -58,8 +58,8 @@ dataservice = {
         }
 
     },
-    getHighestID(tasks) {
-        return tasks.length
+    getHighestID(database) {
+        return database.length
     },
 }
 
