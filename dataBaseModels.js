@@ -56,7 +56,8 @@ export class Steps {
 }
 export class shoppingLists {
     ID;
-    taskID
+    taskID;
+    allDone;
 }
 export class Products {
     ID;

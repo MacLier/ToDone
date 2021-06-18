@@ -1,7 +1,7 @@
 dataservice = {
 
     createTask(task, database) {
-        task.ID = this.getHighestID(tasks) + 1;
+        task.ID = this.getHighestID(database) + 1;
         console.log("from dbservice" + JSON.stringify(task))
             ;
         return database.push(task);

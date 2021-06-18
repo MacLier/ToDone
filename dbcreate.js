@@ -1,24 +1,12 @@
-const { Sequelize, DataTypes, STRING } = require('sequelize');
-const { shoppingLists, Products } = require('./dataBaseModels');
+const { Sequelize, DataTypes } = require('sequelize');
+const path = require('path');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'to-done.sqlite'
+    storage: path.join(__dirname, 'to-done.sqlite')
 });
 
 const Users = sequelize.define('Users', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        references: UserTasks.userID
-    },
-    UUID: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     firstName: {
         type: DataTypes.STRING(50),
         allowNull: false
@@ -35,38 +23,19 @@ const Users = sequelize.define('Users', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    softDelete: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
-    },
     password: {
         type: DataTypes.STRING(255),
         allowNull: false,
     }
 })
 
-const Tasks = sequelize.define('Tasks', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        references: UserTasks.taskID,
-        references: Events.taskID,
-        references: Todos.taskID,
-        references: shoppingLists.taskID,
-    },
+const Events = sequelize.define('Events', {
     name: {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
     description: {
         type: DataTypes.STRING(255),
-        allowNull: true,
-    },
-    allDone: {
-        type: DataTypes.BOOLEAN,
         allowNull: true,
     },
     timeRequirement: {
@@ -76,32 +45,6 @@ const Tasks = sequelize.define('Tasks', {
     index: {
         type: DataTypes.NUMBER(200),
         allowNull: true,
-    },
-})
-
-const UserTasks = sequelize.define('UserTasks', {
-    userID: {
-        type: DataTypes.INTEGER,
-        references: Users.ID
-    },
-    taskID: {
-        type: DataTypes.INTEGER,
-        references: Tasks.ID
-    }
-})
-
-const Events = sequelize.define('Events', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        references: Preparations.eventID,
-    },
-    taskID: {
-        type: DataTypes.INTEGER,
-        references: Tasks.ID,
     },
     isItDone: {
         type: DataTypes.BOOLEAN,
@@ -115,10 +58,6 @@ const Events = sequelize.define('Events', {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    notificationID: {
-        type: DataTypes.INTEGER,
-        references: References.ID,
-    },
     members: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -126,62 +65,35 @@ const Events = sequelize.define('Events', {
     location: {
         type: DataTypes.STRING(100),
         allowNull: true,
+    }
+})
+const Preparations = sequelize.define('Preparations', {
+    name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
     },
-    allDone: {
+    isItDone: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
 })
 
-const Preparations = sequelize('Preparations', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-    },
-    eventID: {
-        type: DataTypes.INTEGER,
-        references: Events.ID
-    },
-    prepName: {
+const Todos = sequelize.define('Todos', {
+    name: {
         type: DataTypes.STRING(100),
         allowNull: false,
-    }
-})
-
-const Notifications = sequelize('Notifications', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        references: Events.notificationID,
     },
-    notifName: {
-        type: DataTypes.STRING(30),
+    description: {
+        type: DataTypes.STRING(255),
         allowNull: true,
     },
-    notifDate: {
+    timeRequirement: {
         type: DataTypes.DATE,
         allowNull: true,
-    }
-})
-
-const Todos = sequelize('Todos', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        references: Steps.todoID,
     },
-    taskID: {
-        type: DataTypes.INTEGER,
-        references: Tasks.ID,
+    index: {
+        type: DataTypes.NUMBER(200),
+        allowNull: true,
     },
     isItDone: {
         type: DataTypes.BOOLEAN,
@@ -199,24 +111,13 @@ const Todos = sequelize('Todos', {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    allDone: {
+    isItDone: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
 })
-const Steps = sequelize('Steps', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-    },
-    todoID: {
-        type: DataTypes.INTEGER,
-        references: Todos.ID,
-    },
-    stepName: {
+const Steps = sequelize.define('Steps', {
+    name: {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
@@ -226,42 +127,35 @@ const Steps = sequelize('Steps', {
     },
 })
 
-const ShoppingLists = sequelize('ShoppingLists', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+const ShoppingLists = sequelize.define('ShoppingLists', {
+    name: {
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        references: Products.shoppingListID,
     },
-    taskID: {
-        type: DataTypes.INTEGER,
-        references: Tasks.ID,
+    description: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
     },
-    allDone: {
+    timeRequirement: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    index: {
+        type: DataTypes.NUMBER(200),
+        allowNull: true,
+    },
+    isItDone: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
 })
 
-const Products = sequelize('Products', {
-    ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-    },
-    shoppingListID: {
-        type: DataTypes.INTEGER,
-        references: ShoppingLists.ID,
-    },
-    productName: {
+const Products = sequelize.define('Products', {
+    name: {
         type: DataTypes.STRING(50),
         allowNull: false,
     },
-    measure: {
+    unit: {
         type: DataTypes.STRING(10),
         allowNull: true,
     },
@@ -274,3 +168,31 @@ const Products = sequelize('Products', {
         allowNull: true,
     },
 })
+
+//ONE-TO-MANY cuccok
+Users.hasMany(Events);
+Events.belongsTo(Users);
+Users.hasMany(Todos);
+Todos.belongsTo(Users);
+Users.hasMany(ShoppingLists);
+ShoppingLists.belongsTo(Users);
+
+
+Events.hasMany(Preparations);
+Preparations.belongsTo(Events);
+
+Todos.hasMany(Steps);
+Steps.belongsTo(Todos);
+
+ShoppingLists.hasMany(Products);
+Products.belongsTo(ShoppingLists);
+
+
+try {
+    console.log(sequelize.isDefined('Users'))
+    console.log(sequelize.isDefined('Preparations'))
+    sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+} catch (error) {
+    console.error('Unable to connect to the database:', error);
+}
