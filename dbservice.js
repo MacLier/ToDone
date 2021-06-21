@@ -1,4 +1,25 @@
-const db = require("./dbcreate.js");
+// const sql = require('./dbcreate');
+const Sqlite = require('sqlite3');
+const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the to-done SQlite database.');
+})
+
+const sql = `CREATE TABLE Products(
+    productID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
+    productName TEXT,
+    unit TEXT,
+    amount INTEGER,
+    isItDone INTEGER,
+    serialNumber INTEGER NOT NULL UNIQUE,
+    sListID INTEGER,
+    FOREIGN KEY(sListID)
+          REFERENCES ShoppingListss(sListID) 
+            ON UPDATE RESTRICT
+            ON DELETE SET NULL
+);`
 
 
 
@@ -54,22 +75,36 @@ const db = require("./dbcreate.js");
 
 const dataservice = {
 
-    // async createTask(task, database) {
-    //     Users.create({
-    //         firstName: "jhasbd",
-    //         lastName: "asdoasjm",
-    //         nickName: "asdasd",
-    //         email: "asd",
-    //         password: "asd"
-    //     })
-    //     sequelize.authenticate();
-    //     const x = await Users.findAll();
-    //     console.log(x.every(user => user instanceof x));
-    // task.ID = this.getHighestID(database) + 1;
-    // console.log("from dbservice" + JSON.stringify(task));
-    // return database.push(task);
 
-},
+
+    createTask(task, database) {
+
+        db.all(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                console.log(row.name);
+            });
+        });
+
+        // close the database connection
+        db.close()
+        //     Users.create({
+        //         firstName: "jhasbd",
+        //         lastName: "asdoasjm",
+        //         nickName: "asdasd",
+        //         email: "asd",
+        //         password: "asd"
+        //     })
+        //     sequelize.authenticate();
+        //     const x = await Users.findAll();
+        //     console.log(x.every(user => user instanceof x));
+        // task.ID = this.getHighestID(database) + 1;
+        // console.log("from dbservice" + JSON.stringify(task));
+        // return database.push(task);
+
+    },
     createSubTask(ID, database, subtask) {
         const taskToSubTask = readTaskByID(ID, database)
         if (taskToSubTask.products) {
@@ -82,48 +117,48 @@ const dataservice = {
 
 
     },
-        readTaskByID(ID, database) {
-    for (const task of database) {
-        if (ID == task.ID) {
-            return task
+    readTaskByID(ID, database) {
+        for (const task of database) {
+            if (ID == task.ID) {
+                return task
+            }
+            return "No mach found"
         }
-        return "No mach found"
-    }
-},
+    },
 
-updateTask(ID, task, database) {//id, description, taskName, type, ID, steps
-    const updatedTask = this.readTaskByID(ID, database);
-    updatedTask = task;
-},
-updateSubTask(ID, subTask, database) {
-    const updatedTask = this.readTaskByID(ID, database);
-    if (updatedTask.products) {
-        updatedTask.products.push(subTask)
-    } else if (updatedTask.steps) {
-        updatedTask.steps.push(subTask)
-    } else if (updatedTask.preparations) {
-        updatedTask.preparations.push(subTask)
-    }
-},
+    updateTask(ID, task, database) {//id, description, taskName, type, ID, steps
+        const updatedTask = this.readTaskByID(ID, database);
+        updatedTask = task;
+    },
+    updateSubTask(ID, subTask, database) {
+        const updatedTask = this.readTaskByID(ID, database);
+        if (updatedTask.products) {
+            updatedTask.products.push(subTask)
+        } else if (updatedTask.steps) {
+            updatedTask.steps.push(subTask)
+        } else if (updatedTask.preparations) {
+            updatedTask.preparations.push(subTask)
+        }
+    },
 
-deleteTask(ID, database) {
-    console.log(ID);
-    return database.splice(ID - 1, 1);
-},
-deleteSubTask(ID, subTask, database) {
-    const deletedTask = this.readTaskByID(ID, database);
-    if (deletedTask.products) {
-        deletedTask.products.splice(subTask, 1)
-    } else if (deletedTask.steps) {
-        deletedTask.steps.splice(subTask, 1)
-    } else if (deletedTask.preparations) {
-        deletedTask.preparations.splice(subTask, 1)
-    }
+    deleteTask(ID, database) {
+        console.log(ID);
+        return database.splice(ID - 1, 1);
+    },
+    deleteSubTask(ID, subTask, database) {
+        const deletedTask = this.readTaskByID(ID, database);
+        if (deletedTask.products) {
+            deletedTask.products.splice(subTask, 1)
+        } else if (deletedTask.steps) {
+            deletedTask.steps.splice(subTask, 1)
+        } else if (deletedTask.preparations) {
+            deletedTask.preparations.splice(subTask, 1)
+        }
 
-},
-getHighestID(database) {
-    return database.length
-},
+    },
+    getHighestID(database) {
+        return database.length
+    },
 }
 
 

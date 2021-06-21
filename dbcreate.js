@@ -1,96 +1,110 @@
-const { TEXT, INTEGER } = require('sequelize/types');
-const Sqlite = require('sqlite3');
-const db = new Sqlite.Database('to-done', sqlite3.OPEN_CREATE, (err) => {
-    if (err) {
-        return console.error(err.message);
-    }
-    console.log('Connected to the to-done SQlite database.');
-})
+// const { TEXT, INTEGER } = require('sequelize/types');
 
-module.exports = db;
 
+
+
+const dbCreate = [`
 CREATE TABLE Users(
     userID   INTEGER NOT NULL PRIMARY KEY,
     firstName TEXT    NOT NULL,
     lastName TEXT    NOT NULL,
     nickName TEXT    NOT NULL,
     email TEXT    NOT NULL,
-    isActive TEXT    NOT NULL,
-);
-
+    isActive TEXT    NOT NULL
+);`,
+    `
 CREATE TABLE Tasks(
-    taskID INTEGER NOT NULL PRIMARY KEY,
+    taskID INTEGER NOT NULL UNIQUE PRIMARY KEY,
     taskName TEXT,
     description TEXT,
     timeRequirement TEXT,
-    index INTEGER NOT NULL PRIMARY KEY DESC,
-    userID FOREIGN KEY(userID)
+    userID INTEGER,
+    FOREIGN KEY(userID)
         REFERENCES Users(userID) 
            ON UPDATE RESTRICT
-           ON DELETE NULL
-);
+           ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE Events(
-    eventID   INTEGER NOT NULL PRIMARY KEY,
+    eventID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     softDeadeline TEXT,
     deadline TEXT,
     notifications TEXT,
     members TEXT,
     location TEXT,
     allDone INTEGER,
-    taskID FOREIGN KEY(taskID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    taskID INTEGER,
+    FOREIGN KEY(taskID)
         REFERENCES Tasks(taskID) 
            ON UPDATE RESTRICT
-           ON DELETE NULL
-);
+           ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE Preparations(
-    prepID   INTEGER NOT NULL PRIMARY KEY,
+    prepID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     prepName TEXT,
     isItDone INTEGER,
-    eventID FOREIGN KEY(eventID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    eventID INTEGER,
+    FOREIGN KEY(eventID)
         REFERENCES Events(eventID) 
            ON UPDATE RESTRICT
-           ON DELETE NULL
-);
+           ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE Todos(
-    todoID   INTEGER NOT NULL PRIMARY KEY,
+    todoID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     softDeadeline TEXT,
     deadline TEXT,
     allDone INTEGER,
-    taskID FOREIGN KEY(taskID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    taskID INTEGER,
+    FOREIGN KEY(taskID)
             REFERENCES Tasks(taskID) 
                 ON UPDATE RESTRICT
-                ON DELETE NULL
-);
+                ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE Steps(
-    stepID   INTEGER NOT NULL PRIMARY KEY,
+    stepID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     stepName TEXT,
     isItDone INTEGER,
-    todoID FOREIGN KEY(todoID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    todoID INTEGER,
+    FOREIGN KEY(todoID)
             REFERENCES Todos(todoID) 
                 ON UPDATE RESTRICT
-                ON DELETE NULL
-);
+                ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE ShoppingLists(
-    sListID   INTEGER NOT NULL PRIMARY KEY,
+    sListID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     sListName TEXT,
     allDone INTEGER,
-    taskID FOREIGN KEY(taskID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    taskID INTEGER,
+    FOREIGN KEY(taskID)
             REFERENCES Tasks(taskID) 
                 ON UPDATE RESTRICT
-                ON DELETE NULL
-);
+                ON DELETE SET NULL
+);`,
+    `
 CREATE TABLE Products(
-    productID   INTEGER NOT NULL PRIMARY KEY,
+    productID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
     productName TEXT,
     unit TEXT,
     amount INTEGER,
     isItDone INTEGER,
-    sListID FOREIGN KEY(sListID)
+    serialNumber INTEGER NOT NULL UNIQUE,
+    sListID INTEGER,
+    FOREIGN KEY(sListID)
           REFERENCES ShoppingListss(sListID) 
             ON UPDATE RESTRICT
-            ON DELETE NULL
-);
-
+            ON DELETE SET NULL
+);`,
+]
+module.exports = dbCreate;
 // const { Sequelize, DataTypes } = require('sequelize');
 // const path = require('path');
 
