@@ -1,42 +1,46 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const path = require('path');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.join(__dirname, 'to-done.sqlite')
-});
-const Users = require('./dbcreate.js');
-const Tasks = require('./dbcreate.js');
-const Events = require('./dbcreate.js');
-const Todos = require('./dbcreate.js');
-const ShoppingLists = require('./dbcreate.js');
-const Preparations = require('./dbcreate.js');
-const Steps = require('./dbcreate.js');
-const Products = require('./dbcreate.js');
+const db = require("./dbcreate.js");
 
 
-// try {
-//     await sequelize.authenticate();
-//     console.log('Connection has been established successfully.');
-// } catch (error) {
-//     console.error('Unable to connect to the database:', error);
-// }
+
+// const { Sequelize, DataTypes } = require('sequelize');
+// const path = require('path');
+
+// const sequelize = new Sequelize({
+//     dialect: 'sqlite',
+//     storage: path.join(__dirname, 'to-done.sqlite')
+// });
+// const Users = require('./dbcreate.js');
+// const Tasks = require('./dbcreate.js');
+// const Events = require('./dbcreate.js');
+// const Todos = require('./dbcreate.js');
+// const ShoppingLists = require('./dbcreate.js');
+// const Preparations = require('./dbcreate.js');
+// const Steps = require('./dbcreate.js');
+// const Products = require('./dbcreate.js');
 
 
-Users.hasMany(Tasks);
-// Tasks.belongsTo(Users);
-Tasks.hasMany(Events);
-// Events.belongsTo(Tasks);
-// Users.hasMany(Events);
-Events.hasMany(Preparations)
-Tasks.hasMany(Todos);
-Tasks.hasMany(Steps);
-// Todos.belongsTo(Tasks);
-// Users.hasMany(Todos);
-Tasks.hasMany(ShoppingLists);
-ShoppingLists.hasMany(Products)
-// ShoppingLists.belongsTo(Tasks);
-// Users.hasMany(ShoppingLists);
+// // try {
+// //     await sequelize.authenticate();
+// //     console.log('Connection has been established successfully.');
+// // } catch (error) {
+// //     console.error('Unable to connect to the database:', error);
+// // }
+
+
+// Users.hasMany(Tasks);
+// // Tasks.belongsTo(Users);
+// Tasks.hasMany(Events);
+// // Events.belongsTo(Tasks);
+// // Users.hasMany(Events);
+// Events.hasMany(Preparations)
+// Tasks.hasMany(Todos);
+// Tasks.hasMany(Steps);
+// // Todos.belongsTo(Tasks);
+// // Users.hasMany(Todos);
+// Tasks.hasMany(ShoppingLists);
+// ShoppingLists.hasMany(Products)
+// // ShoppingLists.belongsTo(Tasks);
+// // Users.hasMany(ShoppingLists);
 
 
 // Events.hasMany(Preparations);
@@ -50,22 +54,22 @@ ShoppingLists.hasMany(Products)
 
 const dataservice = {
 
-    async createTask(task, database) {
-        Users.create({
-            firstName: "jhasbd",
-            lastName: "asdoasjm",
-            nickName: "asdasd",
-            email: "asd",
-            password: "asd"
-        })
-        sequelize.authenticate();
-        const x = await Users.findAll();
-        console.log(x.every(user => user instanceof x));
-        // task.ID = this.getHighestID(database) + 1;
-        // console.log("from dbservice" + JSON.stringify(task));
-        // return database.push(task);
+    // async createTask(task, database) {
+    //     Users.create({
+    //         firstName: "jhasbd",
+    //         lastName: "asdoasjm",
+    //         nickName: "asdasd",
+    //         email: "asd",
+    //         password: "asd"
+    //     })
+    //     sequelize.authenticate();
+    //     const x = await Users.findAll();
+    //     console.log(x.every(user => user instanceof x));
+    // task.ID = this.getHighestID(database) + 1;
+    // console.log("from dbservice" + JSON.stringify(task));
+    // return database.push(task);
 
-    },
+},
     createSubTask(ID, database, subtask) {
         const taskToSubTask = readTaskByID(ID, database)
         if (taskToSubTask.products) {
@@ -78,48 +82,48 @@ const dataservice = {
 
 
     },
-    readTaskByID(ID, database) {
-        for (const task of database) {
-            if (ID == task.ID) {
-                return task
-            }
-            return "No mach found"
+        readTaskByID(ID, database) {
+    for (const task of database) {
+        if (ID == task.ID) {
+            return task
         }
-    },
+        return "No mach found"
+    }
+},
 
-    updateTask(ID, task, database) {//id, description, taskName, type, ID, steps
-        const updatedTask = this.readTaskByID(ID, database);
-        updatedTask = task;
-    },
-    updateSubTask(ID, subTask, database) {
-        const updatedTask = this.readTaskByID(ID, database);
-        if (updatedTask.products) {
-            updatedTask.products.push(subTask)
-        } else if (updatedTask.steps) {
-            updatedTask.steps.push(subTask)
-        } else if (updatedTask.preparations) {
-            updatedTask.preparations.push(subTask)
-        }
-    },
+updateTask(ID, task, database) {//id, description, taskName, type, ID, steps
+    const updatedTask = this.readTaskByID(ID, database);
+    updatedTask = task;
+},
+updateSubTask(ID, subTask, database) {
+    const updatedTask = this.readTaskByID(ID, database);
+    if (updatedTask.products) {
+        updatedTask.products.push(subTask)
+    } else if (updatedTask.steps) {
+        updatedTask.steps.push(subTask)
+    } else if (updatedTask.preparations) {
+        updatedTask.preparations.push(subTask)
+    }
+},
 
-    deleteTask(ID, database) {
-        console.log(ID);
-        return database.splice(ID - 1, 1);
-    },
-    deleteSubTask(ID, subTask, database) {
-        const deletedTask = this.readTaskByID(ID, database);
-        if (deletedTask.products) {
-            deletedTask.products.splice(subTask, 1)
-        } else if (deletedTask.steps) {
-            deletedTask.steps.splice(subTask, 1)
-        } else if (deletedTask.preparations) {
-            deletedTask.preparations.splice(subTask, 1)
-        }
+deleteTask(ID, database) {
+    console.log(ID);
+    return database.splice(ID - 1, 1);
+},
+deleteSubTask(ID, subTask, database) {
+    const deletedTask = this.readTaskByID(ID, database);
+    if (deletedTask.products) {
+        deletedTask.products.splice(subTask, 1)
+    } else if (deletedTask.steps) {
+        deletedTask.steps.splice(subTask, 1)
+    } else if (deletedTask.preparations) {
+        deletedTask.preparations.splice(subTask, 1)
+    }
 
-    },
-    getHighestID(database) {
-        return database.length
-    },
+},
+getHighestID(database) {
+    return database.length
+},
 }
 
 
