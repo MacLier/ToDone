@@ -1,4 +1,6 @@
 const express = require('express');
+const pug = require('pug');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const database = require('./database.js');
@@ -7,6 +9,8 @@ const port = 3232;
 
 
 const app = express();
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,7 +23,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Hello backend')
+    res.render('index', {
+        title: 'To do or not to do',
+        message: 'But not try'
+    })
+});
+app.post('/register', async (req, res) => {
+    console.log(req.body);
+    // const result = await db.createTask(req.body, database);
+    res.send(req.body);
+    // res.render('index', {
+    //     title: 'To do or not to do',
+    //     message: 'But not try'
+    // })
 });
 
 app.get('/api', (req, res) => {
