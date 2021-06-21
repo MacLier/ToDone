@@ -1,10 +1,27 @@
-dataservice = {
+const Products = require('./dbcreate.js');
+const ShoppingLists = require('./dbcreate.js');
+const Steps = require('./dbcreate.js');
+const Todos = require('./dbcreate.js');
+const Preparations = require('./dbcreate.js');
+const Events = require('./dbcreate.js');
+const Users = require('./dbcreate.js');
+const sequalize = require('./dbcreate.js');
 
-    createTask(task, database) {
-        task.ID = this.getHighestID(database) + 1;
-        console.log("from dbservice" + JSON.stringify(task))
-            ;
-        return database.push(task);
+const dataservice = {
+
+    async createTask(task, database) {
+        Users.create({
+            firstName: "jhasbd",
+            lastName: "asdoasjm",
+            nickName: "asdasd",
+            email: "asd",
+            password: "asd"
+        });
+        const x = await Users.findAll();
+        console.log(x);
+        // task.ID = this.getHighestID(database) + 1;
+        // console.log("from dbservice" + JSON.stringify(task));
+        // return database.push(task);
 
     },
     createSubTask(ID, database, subtask) {

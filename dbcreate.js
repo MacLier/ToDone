@@ -1,3 +1,4 @@
+
 const { Sequelize, DataTypes } = require('sequelize');
 const path = require('path');
 
@@ -9,7 +10,7 @@ const sequelize = new Sequelize({
 const Users = sequelize.define('Users', {
     firstName: {
         type: DataTypes.STRING(50),
-        allowNull: false
+        allowNull: false,
     },
     lastName: {
         type: DataTypes.STRING(50),
@@ -17,17 +18,42 @@ const Users = sequelize.define('Users', {
     },
     nickName: {
         type: DataTypes.STRING(50),
-        allowNull: true
+        allowNull: true,
     },
     email: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING(255),
         allowNull: false,
     }
 })
+
+const Tasks = sequelize.define('Tasks', {
+
+    name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+    },
+    allDone: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    timeRequirement: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    index: {
+        type: DataTypes.NUMBER(200),
+        allowNull: true,
+    },
+})
+
 
 const Events = sequelize.define('Events', {
     name: {
@@ -170,12 +196,17 @@ const Products = sequelize.define('Products', {
 })
 
 //ONE-TO-MANY cuccok
-Users.hasMany(Events);
-Events.belongsTo(Users);
-Users.hasMany(Todos);
-Todos.belongsTo(Users);
-Users.hasMany(ShoppingLists);
-ShoppingLists.belongsTo(Users);
+Users.hasMany(Tasks);
+Tasks.belongsTo(Users);
+Tasks.hasMany(Events);
+Events.belongsTo(Tasks);
+// Users.hasMany(Events);
+Tasks.hasMany(Todos);
+Todos.belongsTo(Tasks);
+// Users.hasMany(Todos);
+Tasks.hasMany(ShoppingLists);
+ShoppingLists.belongsTo(Tasks);
+// Users.hasMany(ShoppingLists);
 
 
 Events.hasMany(Preparations);
@@ -188,11 +219,22 @@ ShoppingLists.hasMany(Products);
 Products.belongsTo(ShoppingLists);
 
 
-try {
-    console.log(sequelize.isDefined('Users'))
-    console.log(sequelize.isDefined('Preparations'))
-    sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
+// try {
+//     console.log(sequelize.isDefined('Users'))
+//     console.log(sequelize.isDefined('Preparations'))
+//     sequelize.authenticate();
+//     console.log('Connection has been established successfully.');
+// } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+// }
+
+module.exports = sequelize;
+
+module.exports = Tasks;
+module.exports = Products;
+module.exports = ShoppingLists;
+module.exports = Steps;
+module.exports = Todos;
+module.exports = Preparations;
+module.exports = Events;
+module.exports = Users;
