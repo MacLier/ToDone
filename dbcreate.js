@@ -1,8 +1,3 @@
-// const { TEXT, INTEGER } = require('sequelize/types');
-
-
-
-
 const dbCreate = [`
 CREATE TABLE Users(
     userID   INTEGER NOT NULL PRIMARY KEY,
@@ -105,6 +100,7 @@ CREATE TABLE Products(
 );`,
 ]
 module.exports = dbCreate;
+
 // const { Sequelize, DataTypes } = require('sequelize');
 // const path = require('path');
 
