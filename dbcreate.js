@@ -195,28 +195,28 @@ const Products = sequelize.define('Products', {
     },
 })
 
-//ONE-TO-MANY cuccok
-Users.hasMany(Tasks);
-Tasks.belongsTo(Users);
-Tasks.hasMany(Events);
-Events.belongsTo(Tasks);
-// Users.hasMany(Events);
-Tasks.hasMany(Todos);
-Todos.belongsTo(Tasks);
-// Users.hasMany(Todos);
-Tasks.hasMany(ShoppingLists);
-ShoppingLists.belongsTo(Tasks);
-// Users.hasMany(ShoppingLists);
+// //ONE-TO-MANY cuccok
+// Users.hasMany(Tasks);
+// Tasks.belongsTo(Users);
+// Tasks.hasMany(Events);
+// Events.belongsTo(Tasks);
+// // Users.hasMany(Events);
+// Tasks.hasMany(Todos);
+// Todos.belongsTo(Tasks);
+// // Users.hasMany(Todos);
+// Tasks.hasMany(ShoppingLists);
+// ShoppingLists.belongsTo(Tasks);
+// // Users.hasMany(ShoppingLists);
 
 
-Events.hasMany(Preparations);
-Preparations.belongsTo(Events);
+// Events.hasMany(Preparations);
+// Preparations.belongsTo(Events);
 
-Todos.hasMany(Steps);
-Steps.belongsTo(Todos);
+// Todos.hasMany(Steps);
+// Steps.belongsTo(Todos);
 
-ShoppingLists.hasMany(Products);
-Products.belongsTo(ShoppingLists);
+// ShoppingLists.hasMany(Products);
+// Products.belongsTo(ShoppingLists);
 
 
 // try {

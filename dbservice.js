@@ -1,11 +1,52 @@
-const Products = require('./dbcreate.js');
-const ShoppingLists = require('./dbcreate.js');
-const Steps = require('./dbcreate.js');
-const Todos = require('./dbcreate.js');
-const Preparations = require('./dbcreate.js');
-const Events = require('./dbcreate.js');
+const { Sequelize, DataTypes } = require('sequelize');
+const path = require('path');
+
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: path.join(__dirname, 'to-done.sqlite')
+});
 const Users = require('./dbcreate.js');
-const sequalize = require('./dbcreate.js');
+const Tasks = require('./dbcreate.js');
+const Events = require('./dbcreate.js');
+const Todos = require('./dbcreate.js');
+const ShoppingLists = require('./dbcreate.js');
+const Preparations = require('./dbcreate.js');
+const Steps = require('./dbcreate.js');
+const Products = require('./dbcreate.js');
+
+
+// try {
+//     await sequelize.authenticate();
+//     console.log('Connection has been established successfully.');
+// } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+// }
+
+
+Users.hasMany(Tasks);
+// Tasks.belongsTo(Users);
+Tasks.hasMany(Events);
+// Events.belongsTo(Tasks);
+// Users.hasMany(Events);
+Events.hasMany(Preparations)
+Tasks.hasMany(Todos);
+Tasks.hasMany(Steps);
+// Todos.belongsTo(Tasks);
+// Users.hasMany(Todos);
+Tasks.hasMany(ShoppingLists);
+ShoppingLists.hasMany(Products)
+// ShoppingLists.belongsTo(Tasks);
+// Users.hasMany(ShoppingLists);
+
+
+// Events.hasMany(Preparations);
+// Preparations.belongsTo(Events);
+
+// Todos.hasMany(Steps);
+// Steps.belongsTo(Todos);
+
+// ShoppingLists.hasMany(Products);
+// Products.belongsTo(ShoppingLists);
 
 const dataservice = {
 
@@ -16,9 +57,10 @@ const dataservice = {
             nickName: "asdasd",
             email: "asd",
             password: "asd"
-        });
+        })
+        sequelize.authenticate();
         const x = await Users.findAll();
-        console.log(x);
+        console.log(x.every(user => user instanceof x));
         // task.ID = this.getHighestID(database) + 1;
         // console.log("from dbservice" + JSON.stringify(task));
         // return database.push(task);
