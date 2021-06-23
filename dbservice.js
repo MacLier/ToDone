@@ -7,19 +7,19 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
     console.log('Connected to the to-done SQlite database.');
 })
 
-const sql = `CREATE TABLE Products(
-    productID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
-    productName TEXT,
-    unit TEXT,
-    amount INTEGER,
-    isItDone INTEGER,
-    serialNumber INTEGER NOT NULL UNIQUE,
-    sListID INTEGER,
-    FOREIGN KEY(sListID)
-          REFERENCES ShoppingListss(sListID) 
-            ON UPDATE RESTRICT
-            ON DELETE SET NULL
-);`
+// const sql = `CREATE TABLE Products(
+//     productID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
+//     productName TEXT,
+//     unit TEXT,
+//     amount INTEGER,
+//     isItDone INTEGER,
+//     serialNumber INTEGER NOT NULL UNIQUE,
+//     sListID INTEGER,
+//     FOREIGN KEY(sListID)
+//           REFERENCES ShoppingListss(sListID) 
+//             ON UPDATE RESTRICT
+//             ON DELETE SET NULL
+// );`
 
 
 
@@ -74,6 +74,50 @@ const sql = `CREATE TABLE Products(
 // Products.belongsTo(ShoppingLists);
 
 const dataservice = {
+    sql: '',
+
+    createUser(user) {
+        if (this.findUserByEmail(user)) {
+            this.sql = `
+                INSERT INTO Users (firstName,lastName,nickName,email,isActive)
+                VALUES (${user.firstName},${user.lastName},${user.nickName}, 1)
+                WHERE email LIKE ${email}`;
+            db.all(sql, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    console.log(row.name);
+                });
+            });
+            db.close()
+        }
+        else {
+            return "This email was registered"
+        }
+    },
+    findUserByEmail(emil) {
+        if (email) {
+            this.sql = `
+                SELECT *
+                FROM Users
+                WHERE email LIKE ${email}`;
+            db.all(sql, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    console.log(row.name);
+                });
+            });
+
+            // close the database connection
+            db.close()
+        }
+        else {
+            return false
+        }
+    },
 
 
 

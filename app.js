@@ -28,12 +28,7 @@ app.get('/', (req, res) => {
         message: 'But not try'
     })
 });
-app.get('/test', (req, res) => {
-    res.render('test', {
-        title: 'To do or not to do',
-        message: 'But not try'
-    })
-});
+
 app.post('/register', async (req, res) => {
     console.log(req.body);
     // const result = await db.createTask(req.body, database);
