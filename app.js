@@ -12,8 +12,8 @@ const app = express();
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'pug');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', '**');
 //     res.setHeader('Access-Control-Allow-Headers', '**');
@@ -23,6 +23,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
+    console.log('req body: ' + JSON.stringify(req.cookies));
+    // if (req.originalUrl == '/register') {
+
+    //     res.render('index', {
+    //         title: 'To do or not to do',
+    //         message: 'Registration is succesfull'
+    //     })
+    // }
     res.render('index', {
         title: 'To do or not to do',
         message: 'But not try'
@@ -33,7 +41,7 @@ app.post('/register', async (req, res) => {
     console.log("Post a /register-en");
     console.log(req.body.email);
     const result = await db.createUser(req.body);
-    res.json(result)
+    res.redirect('/')
 
 });
 
