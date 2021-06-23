@@ -76,13 +76,13 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
 const dataservice = {
     sql: '',
 
-    createUser(user) {
-        if (this.findUserByEmail(user)) {
+    async createUser(user) {
+        if (await this.findUserByEmail(user.email)) {
             this.sql = `
                 INSERT INTO Users (firstName,lastName,nickName,email,isActive)
                 VALUES (${user.firstName},${user.lastName},${user.nickName}, 1)
-                WHERE email LIKE ${email}`;
-            db.all(sql, (err, rows) => {
+                WHERE email LIKE ${user.email}`;
+            await db.all(this.sql, (err, rows) => {
                 if (err) {
                     throw err;
                 }
@@ -91,18 +91,19 @@ const dataservice = {
                 });
             });
             db.close()
+
         }
         else {
-            return "This email was registered"
+            return "This email was registered."
         }
     },
-    findUserByEmail(emil) {
+    async findUserByEmail(email) {
         if (email) {
             this.sql = `
                 SELECT *
                 FROM Users
-                WHERE email LIKE ${email}`;
-            db.all(sql, (err, rows) => {
+                WHERE email LIKE "${email}"`;
+            await db.all(this.sql, (err, rows) => {
                 if (err) {
                     throw err;
                 }
@@ -113,6 +114,7 @@ const dataservice = {
 
             // close the database connection
             db.close()
+
         }
         else {
             return false

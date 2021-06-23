@@ -30,13 +30,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    console.log(req.body);
-    // const result = await db.createTask(req.body, database);
-    res.send(req.body);
-    // res.render('index', {
-    //     title: 'To do or not to do',
-    //     message: 'But not try'
-    // })
+    console.log("Post a /register-en");
+    console.log(req.body.email);
+    const result = await db.createUser(req.body);
+    res.json(result)
+
 });
 
 app.get('/api', (req, res) => {
