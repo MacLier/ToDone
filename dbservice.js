@@ -76,12 +76,30 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
 const dataservice = {
     sql: '',
 
+    async getAllUser() {
+        this.sql = `
+        SELECT *
+        FROM Users;
+        `
+        const result = await db.all(this.sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                console.log(row.name);
+            });
+        });
+        db.close();
+        return result;
+    },
+
     async createUser(user) {
+        console.log("user in dbservice" + JSON.stringify(user));
         if (await this.findUserByEmail(user.email)) {
             this.sql = `
                 INSERT INTO Users (firstName,lastName,nickName,email,isActive)
                 VALUES (${user.firstName},${user.lastName},${user.nickName}, 1)
-                WHERE email LIKE ${user.email}`;
+                WHERE email LIKE "${user.email}"`;
             await db.all(this.sql, (err, rows) => {
                 if (err) {
                     throw err;
@@ -94,7 +112,7 @@ const dataservice = {
 
         }
         else {
-            return "This email was registered."
+            return false
         }
     },
     async findUserByEmail(email) {
@@ -103,7 +121,7 @@ const dataservice = {
                 SELECT *
                 FROM Users
                 WHERE email LIKE "${email}"`;
-            await db.all(this.sql, (err, rows) => {
+            const result = await db.all(this.sql, (err, rows) => {
                 if (err) {
                     throw err;
                 }
@@ -114,7 +132,7 @@ const dataservice = {
 
             // close the database connection
             db.close()
-
+            return result
         }
         else {
             return false

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const database = require('./database.js');
 const db = require('./dbservice.js');
+const { json } = require('body-parser');
 const port = 3232;
 
 
@@ -12,8 +13,8 @@ const app = express();
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'pug');
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', '**');
 //     res.setHeader('Access-Control-Allow-Headers', '**');
@@ -24,7 +25,9 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     console.log('req body: ' + JSON.stringify(req.cookies));
-    // if (req.originalUrl == '/register') {
+    // res.send(db.getAllUser())
+
+    // if (req.originalUrl =='/register') {
 
     //     res.render('index', {
     //         title: 'To do or not to do',
@@ -39,9 +42,14 @@ app.get('/', (req, res) => {
 
 app.post('/register', async (req, res) => {
     console.log("Post a /register-en");
-    console.log(req.body.email);
     const result = await db.createUser(req.body);
-    res.redirect('/')
+    console.log("result: " + result);
+    if (!result) {
+        res.redirect('/');
+
+    } else {
+        res.json(result);
+    }
 
 });
 
