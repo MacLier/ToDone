@@ -98,8 +98,8 @@ const dataservice = {
         if (await this.findUserByEmail(user.email)) {
             this.sql = `
                 INSERT INTO Users (firstName,lastName,nickName,email,isActive)
-                VALUES (${user.firstName},${user.lastName},${user.nickName}, 1)
-                WHERE email LIKE "${user.email}"`;
+                VALUES (${user.firstName},${user.lastName},${user.nickName},${user.email}, ${1})`;
+
             await db.all(this.sql, (err, rows) => {
                 if (err) {
                     throw err;
