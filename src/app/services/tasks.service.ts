@@ -17,8 +17,15 @@ export class TasksService {
     return this.http.get(this.url);
   }
   create(task): Observable<any> {
+    if (task.type == "event") {
+      return this.http.post<Task>(this.url + "/events", task);
+    } else if (task.type == "todo") {
+      return this.http.post<Task>(this.url + "/todos", task);
+    } else if (task.type == "shoppingList") {
+      return this.http.post<Task>(this.url + "/shoppingLists", task);
+    }
+
     console.log("POST from taskService" + JSON.stringify(task));
-    return this.http.post<Task>(this.url, task);
 
   }
   updateTask(task): Observable<any> {

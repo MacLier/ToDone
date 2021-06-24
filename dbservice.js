@@ -7,22 +7,6 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
     console.log('Connected to the to-done SQlite database.');
 })
 
-// const sql = `CREATE TABLE Products(
-//     productID   INTEGER NOT NULL UNIQUE PRIMARY KEY,
-//     productName TEXT,
-//     unit TEXT,
-//     amount INTEGER,
-//     isItDone INTEGER,
-//     serialNumber INTEGER NOT NULL UNIQUE,
-//     sListID INTEGER,
-//     FOREIGN KEY(sListID)
-//           REFERENCES ShoppingListss(sListID) 
-//             ON UPDATE RESTRICT
-//             ON DELETE SET NULL
-// );`
-
-
-
 // const { Sequelize, DataTypes } = require('sequelize');
 // const path = require('path');
 
@@ -76,21 +60,53 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
 const dataservice = {
     sql: '',
 
-    async getAllUser() {
+    async read(table, id) {
+        if (id) {
+            this.sql = `
+            SELECT * 
+            FROM ${table}
+            WHERE id=${id}
+            `;
+            const result = await db.all(this.sql, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                return result[0];
+            });
+        } else {
+            this.sql = `
+            SELECT *
+            FROM ${table}
+            `;
+            const result = await db.all(this.sql, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                return result;
+            });
+        }
+        // db.close();
+    },
+    async getTasks(table1, table2, table3) {
         this.sql = `
-        SELECT *
-        FROM Users;
-        `
+            SELECT *
+            FROM ${table1}
+            FULL OUTER JOIN ${table2}, ${table3}
+                ON ${table1}.taskID = ${table2}.taskID
+                ON ${table2}.taskID = ${table3}.taskID
+            `
+    },
+    async create(table, record) {
+        this.sql = `
+        INSERT INTO ${table} (${Object.keys(record).join(', ')})
+        VALUES (${Object.values(record).map(value => (typeof value === 'number' ? `${value}` : `'${value}'`)).join(', ')})
+        `;
         const result = await db.all(this.sql, (err, rows) => {
             if (err) {
                 throw err;
             }
-            rows.forEach((row) => {
-                console.log(row.name);
-            });
+            return result;
         });
-        db.close();
-        return result;
     },
 
     async createUser(user) {
@@ -129,8 +145,6 @@ const dataservice = {
                     console.log(row.name);
                 });
             });
-
-            // close the database connection
             db.close()
             return result
         }
