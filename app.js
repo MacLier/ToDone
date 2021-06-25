@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
     //         message: 'Registration is succesfull'
     //     })
     // }
-    console.log(await db.read('Users'));
+
     res.render('index', {
         title: 'To do or not to do',
         message: 'But not try',
@@ -48,18 +48,23 @@ app.post('/register', async (req, res) => {
 });
 app.post('/login', async (req, res) => {
     console.log("Post a /login-on");
-    const result = await db.read("Users", req.body);
-    if (result.email == req.body.email && result.password == req.body.password) {
-        console.log("Your logis is successful.");
-        res.cookie(forceFighter, "mtfbwy", {
-            domain: 'http://localhost:4200/',
-            path: '/',
-            expires: new Date(Date.now() + 900000)
+    const users = await db.read("Users") || [];
+    console.log("Users from db ", users);
+    for (let user in users) {
+        if (user.email === req.body.email &&
+            user.password === req.body.password) {
 
-        })
-        redirect('http://localhost:4200/')
+            console.log("Your logis is successful.");
+            res.cookie(forceFighter, "mtfbwy", {
+                domain: 'http://localhost:4200/',
+                path: '/',
+                expires: new Date(Date.now() + 900000)
+
+            })
+            redirect('http://localhost:4200/')
+        }
     }
-    console.log("result in login: " + result);
+
     res.redirect('/');
 
 });

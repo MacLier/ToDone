@@ -62,40 +62,43 @@ const dataservice = {
 
     async read(table, id) {
         if (id) {
-            this.sql = `
+            const sql = `
             SELECT * 
             FROM ${table}
-            WHERE id=${id}
+            WHERE id=${id};
             `;
-            const result = await db.all(this.sql, (err, rows) => {
-                if (err) {
-                    throw err;
-                }
-                return result[0];
+            return new Promise((resolve, reject) => {
+                db.all(sql, [], (err, rows) => {
+                    if (err) return reject(err);
+
+                    resolve(rows);
+                });
             });
         } else {
-            this.sql = `
+            const sql = `
             SELECT *
             FROM ${table}
             `;
-            const result = await db.all(this.sql, (err, rows) => {
-                if (err) {
-                    throw err;
-                }
-                return result;
+            const result = [];
+            return new Promise((resolve, reject) => {
+                db.all(sql, [], (err, rows) => {
+                    if (err) return reject(err);
+
+                    resolve(rows);
+                });
             });
         }
         // db.close();
     },
-    async getTasks(table1, table2, table3) {
-        this.sql = `
-            SELECT *
-            FROM ${table1}
-            FULL OUTER JOIN ${table2}, ${table3}
-                ON ${table1}.taskID = ${table2}.taskID
-                ON ${table2}.taskID = ${table3}.taskID
-            `
-    },
+    // async getTasks(table1, table2, table3) {
+    //     this.sql = `
+    //         SELECT *
+    //         FROM ${table1}, ${table2}, ${table3}
+    //         FULL OUTER JOIN ${table2}, ${table3}
+    //             ON ${table1}.taskID = ${table2}.taskID
+    //             ON ${table2}.taskID = ${table3}.taskID
+    //         `
+    // },
     async create(table, record) {
         if (table == 'Users') {
             this.sql = `
