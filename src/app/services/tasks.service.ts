@@ -17,6 +17,7 @@ export class TasksService {
     return this.http.get(this.url);
   }
   create(task): Observable<any> {
+    task.deskription = "";
     if (task.type == "event") {
       return this.http.post<Task>(this.url + "/events", task);
     } else if (task.type == "todo") {

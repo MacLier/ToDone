@@ -97,6 +97,12 @@ const dataservice = {
             `
     },
     async create(table, record) {
+        if (table == 'Users') {
+            this.sql = `
+        INSERT INTO ${table} (${Object.keys(record).join(', ')}isActive)
+        VALUES (${Object.values(record).map(value => (typeof value === 'number' ? `${value}` : `'${value}'`)).join(', ')},${1})
+        `;
+        }
         this.sql = `
         INSERT INTO ${table} (${Object.keys(record).join(', ')})
         VALUES (${Object.values(record).map(value => (typeof value === 'number' ? `${value}` : `'${value}'`)).join(', ')})
@@ -141,12 +147,10 @@ const dataservice = {
                 if (err) {
                     throw err;
                 }
-                rows.forEach((row) => {
-                    console.log(row.name);
-                });
+                console.log("finduser:" + JSON.stringify(result));
             });
             db.close()
-            return result
+            return true
         }
         else {
             return false

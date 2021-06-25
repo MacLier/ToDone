@@ -1,11 +1,11 @@
 const express = require('express');
-const pug = require('pug');
-const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookie = require('cookie-parser');
+const pug = require('pug');
+const path = require('path');
 const database = require('./database.js');
 const db = require('./dbservice.js');
-const { json } = require('body-parser');
 const port = 3232;
 
 
@@ -41,14 +41,32 @@ app.get('/', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     console.log("Post a /register-en");
-    const result = await db.createUser(req.body);
-    console.log("result: " + result);
+    const result = await db.create("Users", req.body);
+    console.log("result in register: " + result);
+    res.redirect('/');
+
+});
+app.post('/login', async (req, res) => {
+    console.log("Post a /login-on");
+    const result = await db.read("Users", req.body);
+    if (result.email == req.body.email && result.password == req.body.password) {
+        console.log("Your logis is successful.");
+        res.cookie(forceFighter, "mtfbwy", {
+            domain: 'http://localhost:4200/',
+            path: '/',
+            expires: new Date(Date.now() + 900000)
+
+        })
+        redirect('http://localhost:4200/')
+    }
+    console.log("result in login: " + result);
     res.redirect('/');
 
 });
 
 app.get('/api', async (req, res) => {
     console.log("GET a /api-n");
+    // if (req.cookies)
     const result = await db.getTasks("Todos", "Events", "ShoppingLists")
     res.json(result);
 });
@@ -61,7 +79,7 @@ app.post('/api/todos', async (req, res, next) => {
 app.post('/api/events', async (req, res, next) => {
     console.log("POST a /api/events-en");
     const result = await db.create("Events", req.body);
-    res.json(result);
+    // res.json(result);
     res.redirect('/api');
 })
 app.post('/api/shoppingLists', async (req, res, next) => {
