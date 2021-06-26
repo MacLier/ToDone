@@ -79,7 +79,6 @@ const dataservice = {
             SELECT *
             FROM ${table}
             `;
-            const result = [];
             return new Promise((resolve, reject) => {
                 db.all(sql, [], (err, rows) => {
                     if (err) return reject(err);
@@ -90,15 +89,34 @@ const dataservice = {
         }
         // db.close();
     },
-    // async getTasks(table1, table2, table3) {
-    //     this.sql = `
-    //         SELECT *
-    //         FROM ${table1}, ${table2}, ${table3}
-    //         FULL OUTER JOIN ${table2}, ${table3}
-    //             ON ${table1}.taskID = ${table2}.taskID
-    //             ON ${table2}.taskID = ${table3}.taskID
-    //         `
-    // },
+    async getTasks(table1, table2, table3) {
+        const sql =
+            `
+        SELECT *
+        FROM ${table1} CROSS JOIN ${table2} CROSS JOIN ${table3}`
+        // `
+        //     SELECT *
+        //     FROM ${table1}, ${table2}, ${table3}
+        //     Left JOIN ${table2}, ${table3}
+        //         ON ${table1}.taskID = ${table2}.taskID
+        //     UNION ALL
+        //     SELECT *
+        //     FROM ${table2}
+        //     LEFT JOIN ${table1} 
+        //         ON ${table2}.taskID = ${table1}.taskID
+        //     SELECT *
+        //     FROM ${table3}
+        //     LEFT JOIN ${table2} 
+        //         ON ${table3}.taskID = ${table2}.taskID
+        //     `;
+        return new Promise((resolve, reject) => {
+            db.all(sql, [], (err, rows) => {
+                if (err) return reject(err);
+
+                resolve(rows);
+            });
+        });
+    },
     async create(table, record) {
         if (table == 'Users') {
             this.sql = `
