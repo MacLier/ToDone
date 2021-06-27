@@ -33,6 +33,8 @@ app.get('/', async (req, res) => {
     //         message: 'Registration is succesfull'
     //     })
     // }
+    res.clearCookie('forcelearner')
+    console.log("/ cookies", req.Cookies);
     res.render('index', {
         title: 'To do or not to do',
         message: 'But not try',
@@ -49,37 +51,43 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     console.log("Post a /login-on");
     const users = await db.read("Users");
-    // console.log("Users from db ", users);
     for (let user of users) {
-        // console.log("/login user:", user);
-        // console.log("Req header: ", req.headers);
         if (user.email == req.body.email &&
             user.password == req.body.password) {
-
             console.log("Your login is successful.");
             res.clearCookie('forcelearner')
             res.cookie('forceFighter', "mtfbwy", {
                 path: 'http://localhost:4200',
-                httpOnly: false
+                expires: new Date(Date.now() + 90000),
+                // httpOnly: false,
+                sameSite: 'lax'
+                // secure: true
             })
-            res.redirect('http://localhost:4200/')
-        }
-        else {
+            // res.status(200).send({ authenticated: !!req.cookies.forceFighter })
+            res.redirect('http://localhost:4200')
+            break
+        } else {
             res.cookie('forcelearner', 'notreg', {
                 path: '/',
                 expires: new Date(Date.now() + 90000),
+                sameSite: 'lax',
+                secure: true
             })
             res.redirect('/');
         }
     }
-
-
 });
 
 app.get('/api', async (req, res) => {
     console.log("GET a /api-n");
-    console.log("/api cookies", JSON.stringify(req.signedCookies));
+    for (let cookie in req.Cookies) {
+        console.log(cookie);
+    }
 
+    // console.log("/api cookies", req.Cookies.forceFighter);
+    // const result = await db.getTasks("Todos", "Events", "ShoppingLists");
+    // console.log("/apin a tasks", result);
+    // res.json(req.Cookies);
 });
 app.post('/api/todos', async (req, res, next) => {
     console.log("POST a /api/todos-on");

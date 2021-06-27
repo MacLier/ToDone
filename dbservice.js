@@ -58,7 +58,6 @@ const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
 // Products.belongsTo(ShoppingLists);
 
 const dataservice = {
-    sql: '',
 
     async read(table, id) {
         if (id) {
