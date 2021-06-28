@@ -80,9 +80,9 @@ app.post('/login', async (req, res) => {
 
 app.get('/api', async (req, res) => {
     console.log("GET a /api-n");
-    for (let cookie in req.Cookies) {
-        console.log(cookie);
-    }
+    // for (let cookie in req) {
+    //     console.log(cookie);
+    // }
 
     // console.log("/api cookies", req.Cookies.forceFighter);
     // const result = await db.getTasks("Todos", "Events", "ShoppingLists");
