@@ -1,14 +1,14 @@
-<form type="submit" method="api/post" action="login">
+<form (submit)="OnLogin()">
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="email">Email</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="email" id="email" type="email"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="unauthorizedUser.email"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long.</span></div>
     </div>
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="password">Password</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="password" id="password" type="text"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="unauthorizedUser.password"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long. </span></div>
     </div><button class="btn btn-primary" type="submit">Login</button>
 </form>

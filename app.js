@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const JWT = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const expressJWT = require('express-jwt');
 const pug = require('pug');
 const path = require('path');
 const database = require('./database.js');
@@ -65,11 +66,9 @@ app.post('/api/login', async (req, res) => {
                 sameSite: 'lax'
                 // secure: true
             })
-            const accessToken = JWT.sign({ username: user.username, role: user.role }, accessTokenSecret);
+            const accessToken = jwt.sign({ email: user.email, name: user.firstName }, accessTokenSecret, { expiresIn: '30s' });
 
-            res.json({
-                accessToken
-            });
+            res.status(200).json({ "token": accessToken });
             // res.status(200).send({ authenticated: !!req.cookies.forceFighter })
             // res.redirect('http://localhost:4200')
             break
