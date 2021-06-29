@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { ShoppingsComponent } from './actual-day/tasks-list/shoppings/shoppings.
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthenticationService } from './services/authentication.service';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

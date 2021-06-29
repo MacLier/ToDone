@@ -8,6 +8,7 @@ const path = require('path');
 const database = require('./database.js');
 const db = require('./dbservice.js');
 const port = 3232;
+const accessTokenSecret = 'MEGBASSZAbocsbocsbocsánat';
 
 
 const app = express();
@@ -49,7 +50,7 @@ app.post('/api/register', async (req, res) => {
     // res.redirect('/');
 
 });
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     console.log("Post a /login-on");
     const users = await db.read("Users");
     for (let user of users) {
@@ -64,6 +65,11 @@ app.post('/login', async (req, res) => {
                 sameSite: 'lax'
                 // secure: true
             })
+            const accessToken = JWT.sign({ username: user.username, role: user.role }, accessTokenSecret);
+
+            res.json({
+                accessToken
+            });
             // res.status(200).send({ authenticated: !!req.cookies.forceFighter })
             // res.redirect('http://localhost:4200')
             break
