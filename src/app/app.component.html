@@ -1,3 +1,7 @@
-<app-header></app-header>
+<app-header (click)="changeLogin()"></app-header>
+<div class="container text-center">
+    <app-register *ngIf="!login"></app-register>
+    <app-login *ngIf="login"></app-login>
+</div>
 <actual-day></actual-day>
 <!-- <router-outlet></router-outlet> -->

@@ -11,8 +11,8 @@ import { TodosComponent } from './actual-day/tasks-list/todos/todos.component';
 import { EventsComponent } from './actual-day/tasks-list/events/events.component';
 import { ShoppingsComponent } from './actual-day/tasks-list/shoppings/shoppings.component';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login/login.component';
-import { RegisterComponent } from './register/register/register.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({

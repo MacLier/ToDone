@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  login: boolean = true;
+  autheticated: boolean = false;
+  autentication: string = ''
   description: string = "This is ToDone app first view"
   title = 'ToDone';
   constructor(private http: HttpClient) {
@@ -17,5 +20,13 @@ export class AppComponent {
     //Add 'implements OnInit' to the class.
     console.log(document.cookie);
 
+  }
+
+  changeLogin() {
+    if (!this.login) {
+      this.login = true;
+    } else {
+      this.login = false
+    }
   }
 }
