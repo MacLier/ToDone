@@ -1,6 +1,6 @@
 // const sql = require('./dbcreate');
 const Sqlite = require('sqlite3');
-const db = new Sqlite.Database('to-done', 'sqlite3.OPEN_CREATE', (err) => {
+const db = new Sqlite.Database('to-done.sqlite', 'sqlite3.OPEN_CREATE', (err) => {
     if (err) {
         return console.error(err.message);
     }

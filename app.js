@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const JWT = require('jsonwebtoken');
 const pug = require('pug');
 const path = require('path');
 const database = require('./database.js');
@@ -41,11 +42,11 @@ app.get('/', async (req, res) => {
     })
 });
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
     console.log("Post a /register-en");
     const result = await db.create("Users", req.body);
-    console.log("result in register: " + result);
-    res.redirect('/');
+    console.log("result in register: ", result);
+    // res.redirect('/');
 
 });
 app.post('/login', async (req, res) => {
@@ -64,7 +65,7 @@ app.post('/login', async (req, res) => {
                 // secure: true
             })
             // res.status(200).send({ authenticated: !!req.cookies.forceFighter })
-            res.redirect('http://localhost:4200')
+            // res.redirect('http://localhost:4200')
             break
         } else {
             res.cookie('forcelearner', 'notreg', {

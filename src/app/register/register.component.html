@@ -1,32 +1,32 @@
-<form type="submit" method="post" action="register">
+<form (submit)="OnCreateNewUser()">
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="firstName">First name</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="firstName" id="firstName" type="text"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="newUser.firstName"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long.</span></div>
     </div>
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="lastName">Last name</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="lastName" id="lastName" type="text"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="newUser.lastName"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long.</span></div>
     </div>
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="nickName">Nick name</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="nickName" id="nickName" type="text"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="newUser.nickName"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long. </span></div>
     </div>
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="email">Email</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="email" id="email" type="email"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="newUser.email"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long.</span></div>
     </div>
     <div class="row g-3 align-items-center">
         <div class="col-auto"><label class="col-form-label" for="password">Password</label></div>
         <div class="col-auto"><input class="inputPassword6 form-control" name="password" id="password" type="password"
-                aria-describedby="passwordHelpInline"></div>
+                aria-describedby="passwordHelpInline" [(ngModel)]="newUser.password"></div>
         <div class="col-auto"><span class="passwordHelpInline form-text">Must be 8-20 characters long. </span></div>
     </div><button class="btn btn-primary" type="submit">Register </button>
 </form>
